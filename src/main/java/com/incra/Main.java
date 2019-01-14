@@ -18,6 +18,14 @@ interface Converter<F, T> {
   T convert(F from);
 }
 
+interface Formula {
+  double calculate(int a);
+
+  default double sqrt(int a) {
+    return Math.sqrt(a);
+  }
+}
+
 public class Main {
 
   public static void main(String[] args) {
@@ -51,5 +59,16 @@ public class Main {
     Converter<String, String> converter = something::startsWith;
     String converted = converter.convert("Java");
     System.out.println(converted);    // "J"
+
+    // Now apply a functional interface to the members of the list.
+    Formula formula = new Formula() {
+      @Override
+      public double calculate(int a) {
+        return sqrt(a * 100);
+      }
+    };
+
+    System.out.println(formula.calculate(100));     // 100.0
+    System.out.println(formula.sqrt(16));           // 4.0
   }
 }
