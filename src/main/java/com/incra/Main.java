@@ -7,6 +7,17 @@ interface MyGreeting {
   String processName(String str);
 }
 
+class Something {
+  String startsWith(String s) {
+    return String.valueOf(s.charAt(0));
+  }
+}
+
+@FunctionalInterface
+interface Converter<F, T> {
+  T convert(F from);
+}
+
 public class Main {
 
   public static void main(String[] args) {
@@ -36,5 +47,9 @@ public class Main {
       .filter((s) -> s.startsWith("a"))
       .forEach(System.out::println);
 
+    Something something = new Something();
+    Converter<String, String> converter = something::startsWith;
+    String converted = converter.convert("Java");
+    System.out.println(converted);    // "J"
   }
 }
